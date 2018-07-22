@@ -2,7 +2,7 @@
 
 This is a simple CRUD application for managing the Employees in a standard Northwind database.
 
-The application interfaces with a REST service that is hosted by an application deployed in (Linx)[https://linx.software/] (see Deployment section below).
+The application interfaces with a REST service that is hosted by an application deployed in [Linx](https://linx.software/) (see Deployment section below).
 
 ## Angular app
 
@@ -22,4 +22,4 @@ Change to the `web` folder and run `ng build` to build the project. The build ar
 
 ### Deployment
 
-To deploy the REST service, install (Linx)[https://linx.software/], and deploy the Linx solution file `service/Northwind.lsoz` onto your Linx Server.
+To deploy the REST service, install [Linx](https://linx.software/), and deploy the Linx solution file `service/Northwind.lsoz` onto your Linx Server.
