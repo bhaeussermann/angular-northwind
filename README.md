@@ -2,7 +2,7 @@
 
 This is a simple CRUD application for managing the Employees in a standard Northwind database.
 
-The application interfaces with a REST service that is hosted by an application deployed in [Linx](https://linx.software/) (see Deployment section below).
+The application interfaces with a REST service that is hosted by an application deployed in [Linx](https://linx.software/) (see REST service/Deployment section below).
 
 ## Angular app
 
