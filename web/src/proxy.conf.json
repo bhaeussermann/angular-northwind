@@ -1,0 +1,10 @@
+{
+    "/api": {
+        "target": "http://40.87.48.165:8030",
+        "secure": false,
+        "pathRewrite": {
+            "^/api": "/northwind"
+        },
+        "changeOrigin": true
+    }
+}

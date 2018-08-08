@@ -51,7 +51,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "northwind:build"
+            "browserTarget": "northwind:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
