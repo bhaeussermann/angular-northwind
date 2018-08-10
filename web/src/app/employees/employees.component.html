@@ -1,16 +1,18 @@
 <h1>
   Employees
 </h1>
-<table class='table'>
+<app-loader [class]='!isLoading ? "hidden" : ""'></app-loader>
+<h3 [class]='!hasError ? "hidden" : ""'>Error retrieving employees: {{errorMessage}}</h3>
+<table [class]='"table " + (!didLoad ? "hidden" : "")'>
   <tr>
-    <th (click)='toggleSortField("firstName")' [class]='"sortable " + sortIndicatorClass("firstName")'>First Name</th>
     <th (click)='toggleSortField("lastName")' [class]='"sortable " + sortIndicatorClass("lastName")'>Last Name</th>
+    <th (click)='toggleSortField("firstName")' [class]='"sortable " + sortIndicatorClass("firstName")'>First Name</th>
     <th (click)='toggleSortField("title")' [class]='"sortable " + sortIndicatorClass("title")'>Title</th>
     <th></th>
   </tr>
   <tr *ngFor='let e of employees'>
-    <td>{{e.firstName}}</td>
     <td>{{e.lastName}}</td>
+    <td>{{e.firstName}}</td>
     <td>{{e.title}}</td>
     <td><a href='#'>Edit</a></td>
   </tr>

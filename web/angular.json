@@ -75,5 +75,10 @@
       }
     }
   },
-  "defaultProject": "northwind"
+  "defaultProject": "northwind",
+  "schematics": {
+    "@schematics/angular:component": {
+      "styleext": "scss"
+    }
+  }
 }

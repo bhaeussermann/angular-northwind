@@ -10,6 +10,11 @@ export class SortController {
         return this._sortOrder;
     }
 
+    setSortField(fieldName: string, sortOrder?: SortOrder) {
+        this._currentSortField = fieldName;
+        this._sortOrder = typeof sortOrder !== 'undefined' ? sortOrder : SortOrder.Ascending;
+    }
+
     toggleSortField(fieldName: string) {
         if (fieldName === this._currentSortField) {
             this._sortOrder = this._sortOrder === SortOrder.Ascending ? SortOrder.Descending : SortOrder.Ascending;
