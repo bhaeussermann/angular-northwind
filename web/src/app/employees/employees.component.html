@@ -3,9 +3,9 @@
 </h1>
 <table class='table'>
   <tr>
-    <th>First Name</th>
-    <th>Last Name</th>
-    <th>Title</th>
+    <th (click)='toggleSortField("firstName")' [class]='"sortable " + sortIndicatorClass("firstName")'>First Name</th>
+    <th (click)='toggleSortField("lastName")' [class]='"sortable " + sortIndicatorClass("lastName")'>Last Name</th>
+    <th (click)='toggleSortField("title")' [class]='"sortable " + sortIndicatorClass("title")'>Title</th>
     <th></th>
   </tr>
   <tr *ngFor='let e of employees'>
