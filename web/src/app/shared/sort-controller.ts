@@ -1,3 +1,6 @@
+import { Injectable } from "@angular/core";
+
+@Injectable()
 export class SortController {
     private _currentSortField: string;
     private _sortOrder: SortOrder;

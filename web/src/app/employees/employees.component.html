@@ -1,9 +1,9 @@
 <h1>
   Employees
 </h1>
-<app-loader [class]='!isLoading ? "hidden" : ""'></app-loader>
-<h3 [class]='!hasError ? "hidden" : ""'>Error retrieving employees: {{errorMessage}}</h3>
-<table [class]='"table " + (!didLoad ? "hidden" : "")'>
+<app-loader *ngIf='isLoading'></app-loader>
+<h3 *ngIf='hasError'>Error retrieving employees: {{errorMessage}}</h3>
+<table *ngIf='didLoad' class='table'>
   <tr>
     <th (click)='toggleSortField("lastName")' [class]='"sortable " + sortIndicatorClass("lastName")'>Last Name</th>
     <th (click)='toggleSortField("firstName")' [class]='"sortable " + sortIndicatorClass("firstName")'>First Name</th>

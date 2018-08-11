@@ -12,11 +12,9 @@ export class EmployeesComponent implements OnInit {
   isLoading: boolean;
   errorMessage: string;
   employees: Employee[] = null;
-  private _sortController: SortController;
-
-  constructor(private _employeeService: EmployeeService) {
-    this._sortController = new SortController();
-  }
+  
+  constructor(private _employeeService: EmployeeService, private _sortController: SortController) 
+  {}
 
   get hasError(): boolean {
     return this.errorMessage != null;

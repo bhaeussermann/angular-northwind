@@ -8,6 +8,7 @@ import { EmployeesComponent } from './employees/employees.component';
 import { EmployeeService } from './employees/employee.service';
 import { TimeoutInterceptor, DEFAULT_TIMEOUT, defaultTimeout } from './shared/timeout-interceptor';
 import { LoaderComponent } from './shared/loader/loader.component';
+import { SortController } from './shared/sort-controller';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { LoaderComponent } from './shared/loader/loader.component';
   ],
   providers: [
     EmployeeService,
+    SortController,
     [{ provide: HTTP_INTERCEPTORS, useClass: TimeoutInterceptor, multi: true }],
     [{ provide: DEFAULT_TIMEOUT, useValue: defaultTimeout }]
   ],
