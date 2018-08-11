@@ -4,11 +4,11 @@ import { EmployeeService } from './employee.service';
 import { SortController, SortOrder } from '../shared/sort-controller';
 
 @Component({
-  selector: 'app-employees',
-  templateUrl: './employees.component.html',
-  styleUrls: ['./employees.component.scss']
+  selector: 'app-employee-list',
+  templateUrl: './employee-list.component.html',
+  styleUrls: ['./employee-list.component.scss']
 })
-export class EmployeesComponent implements OnInit {
+export class EmployeeListComponent implements OnInit {
   isLoading: boolean;
   errorMessage: string;
   employees: Employee[] = null;
@@ -51,7 +51,7 @@ export class EmployeesComponent implements OnInit {
 
   sortIndicatorClass(fieldName: string): string {
     if (this._sortController.currentSortField === fieldName)
-      return this._sortController.sortOrder === SortOrder.Ascending ? "sort-arrow up" : "sort-arrow down";
+      return this._sortController.sortOrder === SortOrder.Ascending ? 'sort-arrow up' : 'sort-arrow down';
     
     return '';
   }
