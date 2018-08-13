@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { LoaderComponent } from './loader/loader.component';
+import { LoaderComponent } from './loader.component';
 import { SortController } from './sort-controller';
 import { DEFAULT_TIMEOUT, defaultTimeout, TimeoutInterceptor } from './timeout-interceptor';
 

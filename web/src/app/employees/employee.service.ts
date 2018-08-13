@@ -7,7 +7,7 @@ import 'rxjs/add/observable/throw';
 
 @Injectable()
 export class EmployeeService {
-  private _employeeUrl = 'http://localhost:4200/api/employees';
+  private _employeeUrl = './api/employees';
 
   constructor(private _http: HttpClient) { }
 
