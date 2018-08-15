@@ -1,5 +1,6 @@
 <h1>
-  Employees
+Employees
+<input class='form-control search' type='text' placeholder='Search' aria-label='Search' [(ngModel)]='filter' />
 </h1>
 <app-loader *ngIf='isLoading'></app-loader>
 <h3 *ngIf='hasError'>Error retrieving employees: {{errorMessage}}</h3>
@@ -10,7 +11,7 @@
     <th (click)='toggleSortField("title")' [class]='"sortable " + sortIndicatorClass("title")'>Title</th>
     <th></th>
   </tr>
-  <tr *ngFor='let e of employees'>
+  <tr *ngFor='let e of filteredEmployees'>
     <td>{{e.lastName}}</td>
     <td>{{e.firstName}}</td>
     <td>{{e.title}}</td>
