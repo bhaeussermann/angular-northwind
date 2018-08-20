@@ -1,0 +1,17 @@
+@import 'spinner';
+
+.spinner {
+    display: inline-block;
+    position: relative;
+    width: 30px;
+    height: 20px;
+    div {
+        transform-origin: 15px 15px;
+    }
+    div:after {
+        top: 2px;
+        left: 13px;
+        width: 2px;
+        height: 7px;
+    }
+}

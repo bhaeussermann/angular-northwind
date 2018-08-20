@@ -3,7 +3,7 @@ Employees
 <input class='form-control search' type='text' placeholder='Search' aria-label='Search' [(ngModel)]='filter' />
 </h1>
 <app-loader *ngIf='isLoading'></app-loader>
-<h3 *ngIf='hasError'>Error retrieving employees: {{errorMessage}}</h3>
+<h5 *ngIf='hasError'>Error retrieving employees: {{errorMessage}}</h5>
 <table *ngIf='didLoad' class='table'>
   <tr>
     <th (click)='toggleSortField("lastName")' [class]='"sortable " + sortIndicatorClass("lastName")'>Last Name</th>
@@ -15,6 +15,6 @@ Employees
     <td>{{e.lastName}}</td>
     <td>{{e.firstName}}</td>
     <td>{{e.title}}</td>
-    <td><a href='#'>Edit</a></td>
+    <td><a [routerLink]="['/employees', e.id]">Edit</a></td>
   </tr>
 </table>

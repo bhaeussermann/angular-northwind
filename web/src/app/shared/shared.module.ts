@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { LoaderComponent } from './loader.component';
 import { SortController } from './sort-controller';
 import { defaultTimeout, DEFAULT_TIMEOUT, TimeoutInterceptor } from './timeout-interceptor';
+import { InlineLoaderComponent } from './inline-loader.component';
 
 @NgModule({
   imports: [
@@ -13,7 +14,8 @@ import { defaultTimeout, DEFAULT_TIMEOUT, TimeoutInterceptor } from './timeout-i
     HttpClientModule
   ],
   declarations: [
-    LoaderComponent
+    LoaderComponent,
+    InlineLoaderComponent
   ],
   providers: [
     SortController,
@@ -24,7 +26,8 @@ import { defaultTimeout, DEFAULT_TIMEOUT, TimeoutInterceptor } from './timeout-i
     CommonModule,
     FormsModule,
     HttpClientModule,
-    LoaderComponent
+    LoaderComponent,
+    InlineLoaderComponent
   ]
 })
 export class SharedModule { }

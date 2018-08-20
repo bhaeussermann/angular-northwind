@@ -4,7 +4,6 @@ import { EmployeeService } from './employee.service';
 import { SortController, SortOrder } from '../shared/sort-controller';
 
 @Component({
-  selector: 'app-employee-list',
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss']
 })
@@ -15,7 +14,9 @@ export class EmployeeListComponent implements OnInit {
   private _allEmployees: Employee[] = null;
   private _filter: string;
   
-  constructor(private _employeeService: EmployeeService, private _sortController: SortController) 
+  constructor(
+    private _employeeService: EmployeeService, 
+    private _sortController: SortController)
   {}
 
   get hasError(): boolean {
