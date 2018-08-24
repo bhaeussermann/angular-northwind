@@ -28,6 +28,12 @@ export class EmployeeService {
       .catch(this.handleError);
   }
 
+  addEmployee(employee: Employee): Observable<number> {
+    return this._http.post<number>(this._employeeUrl, employee,
+      { headers: new HttpHeaders({ timeout: `${5000}`}) })
+      .catch(this.handleError);
+  }
+
   updateEmployee(employee: Employee): Observable<void> {
     return this._http.put(this._employeeUrl + '/' + employee.id, employee,
       { headers: new HttpHeaders({ timeout: `${5000}`}) })
@@ -35,6 +41,15 @@ export class EmployeeService {
         return;
       })
       .catch(this.handleError);
+  }
+
+  deleteEmployee(id: number): Observable<void> {
+    return this._http.delete(this._employeeUrl + '/' + id,
+    { headers: new HttpHeaders({ timeout: `${5000}`}) })
+    .map(response => {
+      return;
+    })
+    .catch(this.handleError);
   }
 
   private handleError(error: HttpErrorResponse) {

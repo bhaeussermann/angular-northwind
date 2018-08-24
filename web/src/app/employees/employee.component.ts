@@ -11,6 +11,7 @@ export class EmployeeComponent implements OnInit {
   private isLoading: boolean;
   private didLoad: boolean;
   private isSaving: boolean;
+  private isAdding: boolean;
   private errorMessage: string;
   private employee: Employee;
 
@@ -26,18 +27,25 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit() {
     let id = +this._route.snapshot.paramMap.get('id');
+    this.isAdding = !id;
 
-    this.isLoading = true;
-    this._employeeService.getEmployee(id).subscribe(
-      e => {
-        this.employee = e;
-        this.isLoading = false;
-        this.didLoad = true;
-      },
-      error => {
-        this.errorMessage = 'Error retrieving employee: ' + error;
-        this.isLoading = false;
-      });
+    if (this.isAdding) {
+      this.employee = new Employee();
+      this.didLoad = true;
+    }
+    else {
+      this.isLoading = true;
+      this._employeeService.getEmployee(id).subscribe(
+        e => {
+          this.employee = e;
+          this.isLoading = false;
+          this.didLoad = true;
+        },
+        error => {
+          this.errorMessage = 'Error retrieving employee: ' + error;
+          this.isLoading = false;
+        });
+    }
   }
 
   onBack(): void {
@@ -52,15 +60,28 @@ export class EmployeeComponent implements OnInit {
     this.errorMessage = null;
     this.isSaving = true;
 
-    this._employeeService.updateEmployee(this.employee).subscribe(
-      v => {
-        this.navigateBack();
-      },
-      error => {
-        this.errorMessage = 'Error saving employee: ' + error;
-        this.isSaving = false;
-      }
-    );
+    if (this.isAdding) {
+      this._employeeService.addEmployee(this.employee).subscribe(
+        id => {
+          this.navigateBack();
+        },
+        error => {
+          this.errorMessage = 'Error saving employee: ' + error;
+          this.isSaving = false;
+        }
+      );
+    }
+    else {
+      this._employeeService.updateEmployee(this.employee).subscribe(
+        v => {
+          this.navigateBack();
+        },
+        error => {
+          this.errorMessage = 'Error saving employee: ' + error;
+          this.isSaving = false;
+        }
+      );
+    }
   }
 
   private navigateBack() {

@@ -1,3 +1,25 @@
 .btn {
     margin: 5px;
 }
+
+.icon-tooltip {
+    position: relative;
+    display: inline-block;
+    margin: 0 5px;
+
+    .icon-tooltip-text {
+        visibility: hidden;
+        position: absolute;
+        z-index: 1;
+        margin: 0 5px;
+        padding: 0 2px;
+        border-radius: 3px;
+        background-color: black;
+        color: #fff;
+        font-size: 0.8em;
+    }
+}
+
+.icon-tooltip:hover .icon-tooltip-text {
+    visibility: visible;
+}

@@ -1,4 +1,4 @@
-<h1>Edit Employee</h1>
+<h1>{{isAdding ? "Add" : "Edit"}} Employee</h1>
 <app-loader *ngIf='isLoading'></app-loader>
 <h5 *ngIf='hasError'>Error retrieving employee: {{errorMessage}}</h5>
 <table *ngIf='didLoad'>

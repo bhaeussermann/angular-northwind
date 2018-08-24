@@ -6,6 +6,7 @@ import { LoaderComponent } from './loader.component';
 import { SortController } from './sort-controller';
 import { defaultTimeout, DEFAULT_TIMEOUT, TimeoutInterceptor } from './timeout-interceptor';
 import { InlineLoaderComponent } from './inline-loader.component';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { InlineLoaderComponent } from './inline-loader.component';
     FormsModule,
     HttpClientModule,
     LoaderComponent,
-    InlineLoaderComponent
+    InlineLoaderComponent,
+    FontAwesomeModule
   ]
 })
 export class SharedModule { }

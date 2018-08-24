@@ -2,19 +2,28 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import { SortController, SortOrder } from '../shared/sort-controller';
+import { Router } from '@angular/router';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   templateUrl: './employee-list.component.html',
   styleUrls: ['./employee-list.component.scss']
 })
 export class EmployeeListComponent implements OnInit {
+  errorIcon = faExclamationCircle;
   isLoading: boolean;
   errorMessage: string;
   filteredEmployees: Employee[];
+
+  isDeletingEmployee: boolean;
+  deletedEmployeeId: number;
+  deleteEmployeeError: string;
+
   private _allEmployees: Employee[] = null;
   private _filter: string;
   
   constructor(
+    private _router: Router,
     private _employeeService: EmployeeService, 
     private _sortController: SortController)
   {}
@@ -36,25 +45,31 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isLoading = true;
+    this.load();
+  }
 
-    this._employeeService.getEmployees()
-      .subscribe(
-        e => {
-          this.isLoading = false;
-          this.errorMessage = null;
-          this._allEmployees = e;
-          this._sortController.setSortField('lastName');
+  addEmployee() {
+    this._router.navigate(['/employees/new']);
+  }
 
-          this.refreshFilteredEmployees();
-        },
-        error => {
-          this.isLoading = false;
-          this.errorMessage = error;
-          this._allEmployees = null;
-          this.filteredEmployees = null;
-        }
-      );
+  confirmDelete(id: number, name: string) {
+    if (confirm('Delete ' + name + '?')) {
+      this.deleteEmployeeError = null;
+      this.deletedEmployeeId = id;
+      this.isDeletingEmployee = true;
+      this._employeeService.deleteEmployee(id)
+        .subscribe(
+          v => {
+            this.isDeletingEmployee = false;
+            this.deletedEmployeeId = null;
+            this.load();
+          },
+          error => {
+            this.isDeletingEmployee = false;
+            this.deleteEmployeeError = error;
+          }
+        );
+    }
   }
 
   toggleSortField(fieldName: string) {
@@ -67,6 +82,30 @@ export class EmployeeListComponent implements OnInit {
       return this._sortController.sortOrder === SortOrder.Ascending ? 'sort-arrow up' : 'sort-arrow down';
     
     return '';
+  }
+
+  private load() {
+    this.isLoading = true;
+
+    this._employeeService.getEmployees()
+      .subscribe(
+        e => {
+          this.isLoading = false;
+          this.errorMessage = null;
+          this.deletedEmployeeId = null;
+          this._allEmployees = e;
+          this._sortController.setSortField('lastName');
+
+          this.refreshFilteredEmployees();
+        },
+        error => {
+          this.isLoading = false;
+          this.errorMessage = error;
+          this.deletedEmployeeId = null;
+          this._allEmployees = null;
+          this.filteredEmployees = null;
+        }
+      );
   }
 
   private refreshFilteredEmployees() {

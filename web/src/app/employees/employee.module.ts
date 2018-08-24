@@ -11,6 +11,7 @@ import { EmployeeGuardService } from './employee-guard.service';
     SharedModule,
     RouterModule.forRoot([
       { path: 'employees', component: EmployeeListComponent },
+      { path: 'employees/new', component: EmployeeComponent },
       { path: 'employees/:id', canActivate: [ EmployeeGuardService ], component: EmployeeComponent }
     ])
   ],
