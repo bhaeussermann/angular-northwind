@@ -18,5 +18,6 @@ Change to the `web` folder and run `ng build` to build the project. The build ar
 
 ### Deployment
 
+You need a server that has SQL Server installed with a Northwind database.  
 To deploy the REST service, install [Linx](https://linx.software/), and deploy the Linx solution file `service/Northwind.lsoz` onto your Linx Server.  
 Set the address to your server in the `web/src/proxy.conf.json` file.
