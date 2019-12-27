@@ -1,28 +1,30 @@
 <h1>{{isAdding ? "Add" : "Edit"}} Employee</h1>
 <app-loader *ngIf='isLoading'></app-loader>
 <h5 *ngIf='hasError'>Error retrieving employee: {{errorMessage}}</h5>
-<table *ngIf='didLoad'>
-  <tr>
-    <td><label for='firstName'>First name:</label></td>
-    <td><input id='firstName' type='text' class='form-control' required [(ngModel)]='employee.firstName' /></td>
-  </tr>
-  <tr>
-    <td><label for='lastName'>Last name:</label></td>
-    <td><input id='lastName' type='text' class='form-control' required [(ngModel)]='employee.lastName' /></td>
-  </tr>
-  <tr>
-    <td><label for='title'>Title:</label></td>
-    <td><input id='title' type='text' class='form-control' required [(ngModel)]='employee.title' /></td>
-  </tr>
-  <tr>
-    <td><label for='birthDate'>Birth Date:</label></td>
-    <td>
-      <input id='birthDate' type='date' class='form-control'
-        [ngModel]='employee.birthDate | date: "yyyy-MM-dd"'
-        (ngModelChange)='employee.birthDate = $event' />
-    </td>
-  </tr>
-</table>
-<button type='button' class='btn btn-primary' [disabled]='!didLoad' (click)='save()'>Save</button>
-<app-inline-loader *ngIf='isSaving'></app-inline-loader>
-<button type='button' class='btn btn-secondary' style='display: inline-block;' (click)='cancel()'>Cancel</button>
+<form *ngIf='didLoad' #form='ngForm' [ngClass]='{ "did-submit": didSubmit }' (ngSubmit)='setDidSubmit() || (form.valid && save())'>
+  <table>
+    <tr>
+      <td><label for='firstName'>First name:</label></td>
+      <td><input id='firstName' name='firstName' type='text' class='form-control' autofocus required [(ngModel)]='employee.firstName' /></td>
+    </tr>
+    <tr>
+      <td><label for='lastName'>Last name:</label></td>
+      <td><input id='lastName' name='lastName' type='text' class='form-control' required [(ngModel)]='employee.lastName' /></td>
+    </tr>
+    <tr>
+      <td><label for='title'>Title:</label></td>
+      <td><input id='title' name='title' type='text' class='form-control' required [(ngModel)]='employee.title' /></td>
+    </tr>
+    <tr>
+      <td><label for='birthDate'>Birth Date:</label></td>
+      <td>
+        <input id='birthDate' name='birthDate' type='date' class='form-control'
+          [ngModel]='employee.birthDate | date: "yyyy-MM-dd"'
+          (ngModelChange)='employee.birthDate = $event' />
+      </td>
+    </tr>
+  </table>
+  <button type='submit' class='btn btn-primary' [disabled]='!didLoad'>Save</button>
+  <app-inline-loader *ngIf='isSaving'></app-inline-loader>
+  <button type='button' class='btn btn-secondary' style='display: inline-block;' (click)='cancel()'>Cancel</button>
+</form>

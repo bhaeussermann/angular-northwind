@@ -8,13 +8,14 @@ import { EmployeeService } from './employee.service';
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
-  private isLoading: boolean;
-  private didLoad: boolean;
-  private isSaving: boolean;
-  private isAdding: boolean;
-  private errorMessage: string;
-  private employee: Employee;
-
+  public isLoading: boolean;
+  public didLoad: boolean;
+  public isSaving: boolean;
+  public isAdding: boolean;
+  public didSubmit: boolean = false;
+  public errorMessage: string;
+  public employee: Employee;
+  
   constructor(
     private _route: ActivatedRoute, 
     private _router: Router,
@@ -54,6 +55,10 @@ export class EmployeeComponent implements OnInit {
 
   cancel(): void {
     this.navigateBack();
+  }
+
+  setDidSubmit(): void {
+    this.didSubmit = true;
   }
 
   save(): void {

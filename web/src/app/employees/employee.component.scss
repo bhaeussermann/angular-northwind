@@ -7,3 +7,8 @@ label {
 td {
     padding-top: 10px;
 }
+
+.form-control.ng-dirty.ng-invalid,
+form.did-submit .form-control.ng-invalid {
+    box-shadow: 0 0 2px 1px red;
+}
