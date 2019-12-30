@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "http://102.133.230.70:8030",
+        "target": "http://102.133.236.5:8030",
         "secure": false,
         "pathRewrite": {
             "^/api": "/northwind"
