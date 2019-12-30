@@ -17,7 +17,7 @@ Employees
       <td>{{e.lastName}}</td>
       <td>{{e.firstName}}</td>
       <td>{{e.title}}</td>
-      <td><a [routerLink]="['/employees', e.id]">Edit</a></td>
+      <td><a href='#' (click)="$event.preventDefault();editEmployee(e.id)">Edit</a></td>
       <td><a href='#' (click)="$event.preventDefault();confirmDelete(e.id, e.firstName + ' ' + e.lastName)">Delete</a>
         <app-inline-loader *ngIf='(isDeletingEmployee) && (deletedEmployeeId == e.id)'></app-inline-loader>
         <span *ngIf='(deleteEmployeeError) && (deletedEmployeeId == e.id)'>

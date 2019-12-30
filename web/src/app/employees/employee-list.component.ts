@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import { SortController, SortOrder } from '../shared/sort-controller';
-import { Router } from '@angular/router';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { EmployeeComponent } from './employee.component';
 
 @Component({
   templateUrl: './employee-list.component.html',
@@ -21,9 +22,10 @@ export class EmployeeListComponent implements OnInit {
 
   private _allEmployees: Employee[] = null;
   private _filter: string;
+  private _modalReference: BsModalRef;
   
   constructor(
-    private _router: Router,
+    private _modalService: BsModalService,
     private _employeeService: EmployeeService, 
     private _sortController: SortController)
   {}
@@ -45,11 +47,21 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this._modalService.onHidden.subscribe(_ => {
+      if (this._modalReference.content.didSave)
+        this.load();
+    });
+    
     this.load();
   }
 
   addEmployee() {
-    this._router.navigate(['/employees/new']);
+    this._modalReference = this._modalService.show(EmployeeComponent);
+  }
+
+  editEmployee(employeeId: number) {
+    this._modalReference = this._modalService.show(EmployeeComponent);
+    this._modalReference.content.initForEmployee(employeeId);
   }
 
   confirmDelete(id: number, name: string) {

@@ -1,24 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { Employee } from './employee';
-import { ActivatedRoute, Router } from '@angular/router';
 import { EmployeeService } from './employee.service';
+import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
+import { Subscription } from 'rxjs';
 
 @Component({
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
 })
 export class EmployeeComponent implements OnInit {
-  public isLoading: boolean;
-  public didLoad: boolean;
-  public isSaving: boolean;
-  public isAdding: boolean;
-  public didSubmit: boolean = false;
-  public errorMessage: string;
-  public employee: Employee;
+  isLoading: boolean;
+  didLoad: boolean;
+  isSaving: boolean;
+  didSave: boolean;
+  isAdding: boolean;
+  didSubmit: boolean = false;
+  errorMessage: string;
+  employee: Employee;
   
   constructor(
-    private _route: ActivatedRoute, 
-    private _router: Router,
+    private _modalService: BsModalService,
+    private _modalReference: BsModalRef,
     private _employeeService: EmployeeService
   ) { }
 
@@ -27,34 +29,34 @@ export class EmployeeComponent implements OnInit {
   }
 
   ngOnInit() {
-    let id = +this._route.snapshot.paramMap.get('id');
-    this.isAdding = !id;
-
-    if (this.isAdding) {
       this.employee = new Employee();
       this.didLoad = true;
-    }
-    else {
-      this.isLoading = true;
-      this._employeeService.getEmployee(id).subscribe(
-        e => {
-          this.employee = e;
-          this.isLoading = false;
-          this.didLoad = true;
-        },
-        error => {
-          this.errorMessage = 'Error retrieving employee: ' + error;
-          this.isLoading = false;
-        });
-    }
+      this.isAdding = true;
+
+      let onShownSubscription: Subscription = null;
+      onShownSubscription = this._modalService.onShown.subscribe(_ => {
+        (document.querySelector('[autofocus]') as HTMLElement).focus();
+        onShownSubscription.unsubscribe();
+      });
   }
 
-  onBack(): void {
-    this.navigateBack();
+  initForEmployee(employeeId: number) {
+    this.isAdding = false;
+    this.isLoading = true;
+    this._employeeService.getEmployee(employeeId).subscribe(
+      e => {
+        this.employee = e;
+        this.isLoading = false;
+        this.didLoad = true;
+      },
+      error => {
+        this.errorMessage = 'Error retrieving employee: ' + error;
+        this.isLoading = false;
+      });
   }
 
   cancel(): void {
-    this.navigateBack();
+    this._modalReference.hide();
   }
 
   setDidSubmit(): void {
@@ -68,7 +70,8 @@ export class EmployeeComponent implements OnInit {
     if (this.isAdding) {
       this._employeeService.addEmployee(this.employee).subscribe(
         id => {
-          this.navigateBack();
+          this.didSave = true;
+          this._modalReference.hide();
         },
         error => {
           this.errorMessage = 'Error saving employee: ' + error;
@@ -79,7 +82,8 @@ export class EmployeeComponent implements OnInit {
     else {
       this._employeeService.updateEmployee(this.employee).subscribe(
         v => {
-          this.navigateBack();
+          this.didSave = true;
+          this._modalReference.hide();
         },
         error => {
           this.errorMessage = 'Error saving employee: ' + error;
@@ -87,9 +91,5 @@ export class EmployeeComponent implements OnInit {
         }
       );
     }
-  }
-
-  private navigateBack() {
-    this._router.navigate(['/employees']);
   }
 }

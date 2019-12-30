@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Employee } from "./employee";
-import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs/Observable";
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
@@ -37,7 +37,7 @@ export class EmployeeService {
   updateEmployee(employee: Employee): Observable<void> {
     return this._http.put(this._employeeUrl + '/' + employee.id, employee,
       { headers: new HttpHeaders({ timeout: `${5000}`}) })
-      .map(response => {
+      .map(_ => {
         return;
       })
       .catch(this.handleError);
@@ -46,14 +46,14 @@ export class EmployeeService {
   deleteEmployee(id: number): Observable<void> {
     return this._http.delete(this._employeeUrl + '/' + id,
     { headers: new HttpHeaders({ timeout: `${5000}`}) })
-    .map(response => {
+    .map(_ => {
       return;
     })
     .catch(this.handleError);
   }
 
   private handleError(error: HttpErrorResponse) {
-      console.error(error.message);
-      return Observable.throw(error.message);
+    console.error(error.message);
+    return Observable.throw(error.status === 500 ? JSON.parse(error.statusText).Message : error.message);
   }
 }
