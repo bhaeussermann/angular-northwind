@@ -1,0 +1,10 @@
+<div class="modal-header">
+  <h2 class="modal-title">Confirmation</h2>
+</div>
+<div class="modal-body">
+  <div>{{message}}</div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" autofocus (click)="this.close(true)">Yes</button>
+  <button class="btn btn-secondary" (click)="this.close(false)">No</button>
+</div>

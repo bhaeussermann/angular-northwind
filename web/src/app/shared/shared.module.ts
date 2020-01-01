@@ -7,6 +7,7 @@ import { SortController } from './sort-controller';
 import { defaultTimeout, DEFAULT_TIMEOUT, TimeoutInterceptor } from './timeout-interceptor';
 import { InlineLoaderComponent } from './inline-loader.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { ConfirmationDialogComponent } from './confirmation-dialog.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   ],
   declarations: [
     LoaderComponent,
-    InlineLoaderComponent
+    InlineLoaderComponent,
+    ConfirmationDialogComponent
   ],
   providers: [
     SortController,

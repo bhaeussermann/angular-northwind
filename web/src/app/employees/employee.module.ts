@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { EmployeeListComponent } from './employee-list.component';
 import { EmployeeComponent } from './employee.component';
 import { EmployeeService } from './employee.service';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 
 @NgModule({
   imports: [
@@ -12,7 +13,10 @@ import { EmployeeService } from './employee.service';
       { path: 'employees', component: EmployeeListComponent }
     ])
   ],
-  entryComponents: [ EmployeeComponent ],
+  entryComponents: [ 
+    ConfirmationDialogComponent,
+    EmployeeComponent 
+  ],
   declarations: [
     EmployeeListComponent,
     EmployeeComponent

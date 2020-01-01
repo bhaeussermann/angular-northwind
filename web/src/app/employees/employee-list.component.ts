@@ -5,6 +5,7 @@ import { SortController, SortOrder } from '../shared/sort-controller';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import { EmployeeComponent } from './employee.component';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
 
 @Component({
   templateUrl: './employee-list.component.html',
@@ -67,23 +68,27 @@ export class EmployeeListComponent implements OnInit {
   }
 
   confirmDelete(id: number, name: string) {
-    if (confirm('Delete ' + name + '?')) {
-      this.deleteEmployeeError = null;
-      this.deletedEmployeeId = id;
-      this.isDeletingEmployee = true;
-      this._employeeService.deleteEmployee(id)
-        .subscribe(
-          v => {
-            this.isDeletingEmployee = false;
-            this.deletedEmployeeId = null;
-            this.load();
-          },
-          error => {
-            this.isDeletingEmployee = false;
-            this.deleteEmployeeError = error;
-          }
-        );
-    }
+    const modalReference = this._modalService.open(ConfirmationDialogComponent);
+    modalReference.componentInstance.message = `Delete ${name}?`;
+    modalReference.result.then(closeResult => {
+      if (closeResult === 'yes') {
+        this.deleteEmployeeError = null;
+        this.deletedEmployeeId = id;
+        this.isDeletingEmployee = true;
+        this._employeeService.deleteEmployee(id)
+          .subscribe(
+            v => {
+              this.isDeletingEmployee = false;
+              this.deletedEmployeeId = null;
+              this.load();
+            },
+            error => {
+              this.isDeletingEmployee = false;
+              this.deleteEmployeeError = error;
+            }
+          );
+      }
+    });
   }
 
   toggleSortField(fieldName: string) {
