@@ -1,14 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
-import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
-import { Subscription } from 'rxjs';
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss']
 })
-export class EmployeeComponent implements OnInit {
+export class EmployeeComponent {
   isLoading: boolean;
   didLoad: boolean;
   isSaving: boolean;
@@ -19,25 +18,16 @@ export class EmployeeComponent implements OnInit {
   employee: Employee;
   
   constructor(
-    private _modalService: BsModalService,
-    private _modalReference: BsModalRef,
+    private _activeModal: NgbActiveModal,
     private _employeeService: EmployeeService
-  ) { }
+  ) {
+    this.employee = new Employee();
+    this.didLoad = true;
+    this.isAdding = true; 
+  }
 
   get hasError(): boolean {
     return this.errorMessage != null;
-  }
-
-  ngOnInit() {
-      this.employee = new Employee();
-      this.didLoad = true;
-      this.isAdding = true;
-
-      let onShownSubscription: Subscription = null;
-      onShownSubscription = this._modalService.onShown.subscribe(_ => {
-        (document.querySelector('[autofocus]') as HTMLElement).focus();
-        onShownSubscription.unsubscribe();
-      });
   }
 
   initForEmployee(employeeId: number) {
@@ -56,7 +46,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   cancel(): void {
-    this._modalReference.hide();
+    this._activeModal.close('canceled');
   }
 
   setDidSubmit(): void {
@@ -71,7 +61,7 @@ export class EmployeeComponent implements OnInit {
       this._employeeService.addEmployee(this.employee).subscribe(
         id => {
           this.didSave = true;
-          this._modalReference.hide();
+          this._activeModal.close('saved');
         },
         error => {
           this.errorMessage = 'Error saving employee: ' + error;
@@ -83,7 +73,7 @@ export class EmployeeComponent implements OnInit {
       this._employeeService.updateEmployee(this.employee).subscribe(
         v => {
           this.didSave = true;
-          this._modalReference.hide();
+          this._activeModal.close('saved');
         },
         error => {
           this.errorMessage = 'Error saving employee: ' + error;

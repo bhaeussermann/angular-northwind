@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { EmployeeListComponent } from './employee-list.component';
-import { EmployeeService } from './employee.service';
 import { SharedModule } from '../shared/shared.module';
+import { EmployeeListComponent } from './employee-list.component';
 import { EmployeeComponent } from './employee.component';
+import { EmployeeService } from './employee.service';
 
 @NgModule({
   imports: [

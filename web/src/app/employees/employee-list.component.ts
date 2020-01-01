@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { SortController, SortOrder } from '../shared/sort-controller';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
-import { SortController, SortOrder } from '../shared/sort-controller';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
-import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { EmployeeComponent } from './employee.component';
 
 @Component({
@@ -22,10 +22,9 @@ export class EmployeeListComponent implements OnInit {
 
   private _allEmployees: Employee[] = null;
   private _filter: string;
-  private _modalReference: BsModalRef;
   
   constructor(
-    private _modalService: BsModalService,
+    private _modalService: NgbModal,
     private _employeeService: EmployeeService, 
     private _sortController: SortController)
   {}
@@ -47,21 +46,24 @@ export class EmployeeListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._modalService.onHidden.subscribe(_ => {
-      if (this._modalReference.content.didSave)
-        this.load();
-    });
-    
     this.load();
   }
 
   addEmployee() {
-    this._modalReference = this._modalService.show(EmployeeComponent);
+    this._modalService.open(EmployeeComponent)
+      .result.then(result => {
+          if (result === 'saved')
+            this.load();
+        });
   }
 
   editEmployee(employeeId: number) {
-    this._modalReference = this._modalService.show(EmployeeComponent);
-    this._modalReference.content.initForEmployee(employeeId);
+    const modalReference = this._modalService.open(EmployeeComponent);
+    modalReference.componentInstance.initForEmployee(employeeId);
+    modalReference.result.then(result => {
+      if (result === 'saved')
+        this.load();
+    });
   }
 
   confirmDelete(id: number, name: string) {

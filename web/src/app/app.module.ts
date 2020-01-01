@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { ModalModule } from 'ngx-bootstrap/modal';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { EmployeeModule } from './employees/employee.module';
@@ -13,7 +13,7 @@ import { EmployeeModule } from './employees/employee.module';
       { path: '', redirectTo: 'employees', pathMatch: 'full' },
       { path: '**', redirectTo: 'employees', pathMatch: 'full' }
     ]),
-    ModalModule.forRoot(),
+    NgbModule,
     EmployeeModule
   ],
   declarations: [

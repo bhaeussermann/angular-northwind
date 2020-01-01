@@ -1,5 +1,6 @@
-import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/timeout';
+import { Observable } from 'rxjs';
+
 import { InjectionToken, Injectable, Inject } from '@angular/core';
 import { HttpRequest, HttpInterceptor, HttpHandler, HttpEvent } from '@angular/common/http';
 
