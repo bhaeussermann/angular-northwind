@@ -1,3 +1,46 @@
+.btn {
+    margin: 5px;
+}
+
 .navbar-default {
     background-color: #F0F0F0;
+}
+
+.modal-container {
+    margin: 10px;
+}
+
+.modal-backdrop {
+    animation: ease-in-out 0.25s modal-backdrop-fade-in;
+    transition: all 0.25s ease-in-out;
+}
+
+.modal {
+    top: -100px;
+    animation: ease-in-out 0.25s modal-fade-in;
+    transition: all 0.25s ease-in-out;
+
+    &.show {
+        top: 0;
+    }
+}
+
+@keyframes modal-backdrop-fade-in {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 0.5;
+    }
+}
+
+@keyframes modal-fade-in {
+    from {
+        top: -100px;
+        opacity: 0;
+    }
+    to {
+        top: 0;
+        opacity: 1;
+    }
 }
