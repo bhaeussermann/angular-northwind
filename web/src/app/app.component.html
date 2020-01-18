@@ -1,10 +1,8 @@
-<div class="container">
-  <nav class="navbar navbar-default border">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <span class="navbar-brand">Northwind Manager</span>
-      </div>
-    </div>
-  </nav>
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <span>Northwind Manager</span>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

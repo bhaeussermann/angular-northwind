@@ -2,37 +2,26 @@
     background-color: #F0F0F0;
 }
 
-.modal-backdrop {
-    animation: ease-in-out 0.25s modal-backdrop-fade-in;
-    transition: all 0.25s ease-in-out;
+mat-sidenav-content > ng-component {
+    display: block;
+    width: 90%;
+    margin: 0 5%;
 }
 
-.modal {
-    top: -100px;
-    animation: ease-in-out 0.25s modal-fade-in;
-    transition: all 0.25s ease-in-out;
-
-    &.show {
-        top: 0;
-    }
+.center {
+    margin: 0 auto;
 }
 
-@keyframes modal-backdrop-fade-in {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 0.5;
-    }
+.full-width {
+    width: 100%;
 }
 
-@keyframes modal-fade-in {
-    from {
-        top: -100px;
-        opacity: 0;
-    }
-    to {
-        top: 0;
-        opacity: 1;
-    }
+mat-dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+}
+
+body { 
+    margin: 0; 
+    font-family: Roboto, "Helvetica Neue", sans-serif; 
 }

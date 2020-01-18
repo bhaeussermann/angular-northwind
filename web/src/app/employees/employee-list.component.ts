@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { SortController, SortOrder } from '../shared/sort-controller';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import { EmployeeComponent } from './employee.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
+import { MatDialogConfig, MatDialog } from '@angular/material';
 
 @Component({
   templateUrl: './employee-list.component.html',
@@ -25,7 +25,7 @@ export class EmployeeListComponent implements OnInit {
   private _filter: string;
   
   constructor(
-    private _modalService: NgbModal,
+    private _dialog: MatDialog,
     private _employeeService: EmployeeService, 
     private _sortController: SortController)
   {}
@@ -51,49 +51,47 @@ export class EmployeeListComponent implements OnInit {
   }
 
   addEmployee() {
-    this._modalService.open(EmployeeComponent)
-      .result.then(result => {
-          if (result === 'saved')
-            this.load();
-        });
+    this._dialog.open(EmployeeComponent)
+      .afterClosed().subscribe(result => {
+        if (result === 'saved')
+          this.load();
+      });
   }
 
   editEmployee(employeeId: number) {
-    const modalReference = this._modalService.open(EmployeeComponent);
-    modalReference.componentInstance.initForEmployee(employeeId);
-    modalReference.result.then(result => {
-      if (result === 'saved')
-        this.load();
-    });
+    this._dialog.open(EmployeeComponent, { data: employeeId })
+      .afterClosed().subscribe(result => {
+        if (result === 'saved')
+          this.load();
+      });
   }
 
   confirmDelete(id: number, name: string) {
-    const modalReference = this._modalService.open(ConfirmationDialogComponent);
-    modalReference.componentInstance.message = `Delete ${name}?`;
-    modalReference.result.then(closeResult => {
-      if (closeResult === 'yes') {
-        this.deleteEmployeeError = null;
-        this.deletedEmployeeId = id;
-        this.isDeletingEmployee = true;
-        this._employeeService.deleteEmployee(id)
-          .subscribe(
-            v => {
-              this.isDeletingEmployee = false;
-              this.deletedEmployeeId = null;
-              this.load();
-            },
-            error => {
-              this.isDeletingEmployee = false;
-              this.deleteEmployeeError = error;
-            }
-          );
-      }
-    });
+    this._dialog.open(ConfirmationDialogComponent, { data: `Delete ${name}?` })
+      .afterClosed().subscribe(result => {
+        if (result === 'yes') {
+          this.deleteEmployeeError = null;
+          this.deletedEmployeeId = id;
+          this.isDeletingEmployee = true;
+          this._employeeService.deleteEmployee(id)
+            .subscribe(
+              v => {
+                this.isDeletingEmployee = false;
+                this.deletedEmployeeId = null;
+                this.load();
+              },
+              error => {
+                this.isDeletingEmployee = false;
+                this.deleteEmployeeError = error;
+              }
+            );
+        }
+      });
   }
 
   toggleSortField(fieldName: string) {
     this._sortController.toggleSortField(fieldName);
-    this._sortController.sort(this.filteredEmployees);
+    this.refreshFilteredEmployees();
   }
 
   sortIndicatorClass(fieldName: string): string {
@@ -128,8 +126,8 @@ export class EmployeeListComponent implements OnInit {
   }
 
   private refreshFilteredEmployees() {
-    this.filteredEmployees = (!this._filter) || (this._filter == '')
-      ? this._allEmployees
+    this.filteredEmployees = !this._filter
+      ? this._allEmployees.slice()
       : this._allEmployees.filter(e => this.employeeDoesMatchFilter(e));
 
     this._sortController.sort(this.filteredEmployees);

@@ -1,4 +1,4 @@
-.btn {
+button {
     margin: 5px;
 }
 
@@ -11,6 +11,7 @@
         visibility: hidden;
         position: absolute;
         z-index: 1;
+        width: 100px;
         margin: 0 5px;
         padding: 0 2px;
         border-radius: 3px;

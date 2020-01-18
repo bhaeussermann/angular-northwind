@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   templateUrl: './employee.component.html',
@@ -18,35 +18,25 @@ export class EmployeeComponent {
   employee: Employee;
   
   constructor(
-    private _activeModal: NgbActiveModal,
-    private _employeeService: EmployeeService
+    private _dialog: MatDialogRef<EmployeeComponent>,
+    private _employeeService: EmployeeService,
+    @Inject(MAT_DIALOG_DATA) employeeId?: number
   ) {
     this.employee = new Employee();
-    this.didLoad = true;
-    this.isAdding = true; 
+    this.isAdding = employeeId == null;
+
+    if (this.isAdding)
+      this.didLoad = true;
+    else
+      this.loadEmployee(employeeId);
   }
 
   get hasError(): boolean {
     return this.errorMessage != null;
   }
 
-  initForEmployee(employeeId: number) {
-    this.isAdding = false;
-    this.isLoading = true;
-    this._employeeService.getEmployee(employeeId).subscribe(
-      e => {
-        this.employee = e;
-        this.isLoading = false;
-        this.didLoad = true;
-      },
-      error => {
-        this.errorMessage = 'Error retrieving employee: ' + error;
-        this.isLoading = false;
-      });
-  }
-
   cancel(): void {
-    this._activeModal.close('canceled');
+    this._dialog.close('canceled');
   }
 
   setDidSubmit(): void {
@@ -61,7 +51,7 @@ export class EmployeeComponent {
       this._employeeService.addEmployee(this.employee).subscribe(
         id => {
           this.didSave = true;
-          this._activeModal.close('saved');
+          this._dialog.close('saved');
         },
         error => {
           this.errorMessage = 'Error saving employee: ' + error;
@@ -73,7 +63,7 @@ export class EmployeeComponent {
       this._employeeService.updateEmployee(this.employee).subscribe(
         v => {
           this.didSave = true;
-          this._activeModal.close('saved');
+          this._dialog.close('saved');
         },
         error => {
           this.errorMessage = 'Error saving employee: ' + error;
@@ -81,5 +71,19 @@ export class EmployeeComponent {
         }
       );
     }
+  }
+
+  private loadEmployee(employeeId: number) {
+    this.isLoading = true;
+    this._employeeService.getEmployee(employeeId).subscribe(
+      e => {
+        this.employee = e;
+        this.isLoading = false;
+        this.didLoad = true;
+      },
+      error => {
+        this.errorMessage = 'Error retrieving employee: ' + error;
+        this.isLoading = false;
+      });
   }
 }

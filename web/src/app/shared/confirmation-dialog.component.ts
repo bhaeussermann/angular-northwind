@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component, Inject } from '@angular/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-confirmation-dialog',
@@ -7,12 +7,16 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrls: ['./confirmation-dialog.component.scss']
 })
 export class ConfirmationDialogComponent {
-  public message: string;
+  private _message: string;
 
-  constructor(private _activeModal: NgbActiveModal)
-  { }
+  constructor(
+    private _dialog: MatDialogRef<ConfirmationDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) private message: string
+  ) { 
+    this._message = message;
+  }
 
   close(response: boolean) {
-    this._activeModal.close(response ? 'yes' : 'no');
+    this._dialog.close(response ? 'yes' : 'no');
   }
 }

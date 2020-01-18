@@ -1,38 +1,47 @@
-<form #form='ngForm' [ngClass]='{ "did-submit": didSubmit }' (ngSubmit)='setDidSubmit() || (form.valid && save())'>
-  <div class="modal-header">
-    <h2 class="modal-title">{{isAdding ? "Add" : "Edit"}} Employee</h2>
+<form #form="ngForm" [ngClass]="{ 'did-submit': didSubmit }" (ngSubmit)="setDidSubmit() || (form.valid && save())">
+  <div>
+    <h2 mat-dialog-title>{{isAdding ? 'Add' : 'Edit'}} Employee</h2>
+    <mat-dialog-content>
+      <app-loader *ngIf="isLoading"></app-loader>
+      <h5 *ngIf="hasError">Error retrieving employee: {{errorMessage}}</h5>
+      <div *ngIf="didLoad">
+        <table>
+          <tr>
+            <td>
+              <mat-form-field>
+                <mat-label for="firstName">First name</mat-label>
+                <input matInput id="firstName" name="firstName" type="text" autofocus required [(ngModel)]="employee.firstName" />
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-label for="lastName">Last name</mat-label>
+                <input matInput id="lastName" name="lastName" type="text" required [(ngModel)]="employee.lastName" />
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <mat-label for="title">Title</mat-label>
+                <input matInput id="title" name="title" type="text" required [(ngModel)]="employee.title" />
+              </mat-form-field>
+            </td>
+            <td>
+              <mat-form-field>
+                <mat-label for="birthDate">Birth Date</mat-label>
+                <input matInput id="birthDate" name="birthDate" type="date"
+                  [ngModel]="employee.birthDate | date: 'yyyy-MM-dd'" (ngModelChange)="employee.birthDate = $event" />
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+      <button mat-button type="submit" [disabled]="!didLoad">Save</button>
+      <app-inline-loader *ngIf="isSaving"></app-inline-loader>
+      <button mat-button type="button" (click)="cancel()">Cancel</button>
+    </mat-dialog-actions>
   </div>
-  <div class="modal-body">
-    <app-loader *ngIf='isLoading'></app-loader>
-    <h5 *ngIf='hasError'>Error retrieving employee: {{errorMessage}}</h5>
-    <div *ngIf='didLoad'>
-      <table>
-        <tr>
-          <td><label for='firstName'>First name:</label></td>
-          <td><input id='firstName' name='firstName' type='text' class='form-control' autofocus required [(ngModel)]='employee.firstName' /></td>
-        </tr>
-        <tr>
-          <td><label for='lastName'>Last name:</label></td>
-          <td><input id='lastName' name='lastName' type='text' class='form-control' required [(ngModel)]='employee.lastName' /></td>
-        </tr>
-        <tr>
-          <td><label for='title'>Title:</label></td>
-          <td><input id='title' name='title' type='text' class='form-control' required [(ngModel)]='employee.title' /></td>
-        </tr>
-        <tr>
-          <td><label for='birthDate'>Birth Date:</label></td>
-          <td>
-            <input id='birthDate' name='birthDate' type='date' class='form-control'
-              [ngModel]='employee.birthDate | date: "yyyy-MM-dd"'
-              (ngModelChange)='employee.birthDate = $event' />
-          </td>
-        </tr>
-      </table>
-    </div>
-  </div>
-  <div class="modal-footer">
-    <button type='submit' class='btn btn-primary' [disabled]='!didLoad'>Save</button>
-    <app-inline-loader *ngIf='isSaving'></app-inline-loader>
-    <button type='button' class='btn btn-secondary' style='display: inline-block;' (click)='cancel()'>Cancel</button>
-</div>
 </form>
