@@ -17,7 +17,7 @@ import { MatTableModule } from '@angular/material/table';
     RouterModule.forRoot([
       { path: '', redirectTo: 'employees', pathMatch: 'full' },
       { path: '**', redirectTo: 'employees', pathMatch: 'full' }
-    ]),
+    ], { relativeLinkResolution: 'legacy' }),
     EmployeeModule,
     BrowserAnimationsModule,
     LayoutModule,

@@ -16,7 +16,7 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.compo
     SharedModule,
     RouterModule.forRoot([
       { path: 'employees', component: EmployeeListComponent }
-    ]),
+    ], { relativeLinkResolution: 'legacy' }),
     MatButtonModule,
     MatTableModule,
     MatFormFieldModule,
