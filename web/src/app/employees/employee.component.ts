@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   templateUrl: './employee.component.html',

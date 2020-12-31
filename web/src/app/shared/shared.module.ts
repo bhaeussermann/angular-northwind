@@ -8,7 +8,8 @@ import { defaultTimeout, DEFAULT_TIMEOUT, TimeoutInterceptor } from './timeout-i
 import { InlineLoaderComponent } from './inline-loader.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ConfirmationDialogComponent } from './confirmation-dialog.component';
-import { MatDialogModule, MatButtonModule } from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   imports: [

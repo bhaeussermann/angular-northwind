@@ -5,7 +5,7 @@ import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import { EmployeeComponent } from './employee.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
-import { MatDialogConfig, MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   templateUrl: './employee-list.component.html',
