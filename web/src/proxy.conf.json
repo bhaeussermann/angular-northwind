@@ -1,9 +1,9 @@
 {
     "/api": {
-        "target": "http://102.133.236.5:8030",
+        "target": "https://northwind-express-api.herokuapp.com",
         "secure": false,
         "pathRewrite": {
-            "^/api": "/northwind"
+            "^/api": "/"
         },
         "changeOrigin": true
     }
