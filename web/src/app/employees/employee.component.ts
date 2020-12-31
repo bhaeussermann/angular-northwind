@@ -1,7 +1,7 @@
 import { Component, Inject } from '@angular/core';
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   templateUrl: './employee.component.html',
@@ -39,11 +39,11 @@ export class EmployeeComponent {
     this._dialog.close('canceled');
   }
 
-  setDidSubmit(): void {
+  saveIfFormValid(isValid: boolean): void {
     this.didSubmit = true;
-  }
 
-  save(): void {
+    if (!isValid) return;
+
     this.errorMessage = null;
     this.isSaving = true;
 

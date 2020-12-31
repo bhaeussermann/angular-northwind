@@ -1,4 +1,4 @@
-<form #form="ngForm" [ngClass]="{ 'did-submit': didSubmit }" (ngSubmit)="setDidSubmit() || (form.valid && save())">
+<form #form="ngForm" [ngClass]="{ 'did-submit': didSubmit }" (ngSubmit)="saveIfFormValid(form.valid)">
   <div>
     <h2 mat-dialog-title>{{isAdding ? 'Add' : 'Edit'}} Employee</h2>
     <mat-dialog-content>
