@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { ColumnMode } from '@swimlane/ngx-datatable';
+import { MatDialog } from '@angular/material/dialog';
 import { faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
-import { SortController, SortOrder } from '../shared/sort-controller';
+
 import { Employee } from './employee';
 import { EmployeeService } from './employee.service';
 import { EmployeeComponent } from './employee.component';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   templateUrl: './employee-list.component.html',
@@ -16,6 +17,7 @@ export class EmployeeListComponent implements OnInit {
   isLoading: boolean;
   errorMessage: string;
   filteredEmployees: Employee[];
+  ColumnMode = ColumnMode;
 
   isDeletingEmployee: boolean;
   deletedEmployeeId: number;
@@ -26,8 +28,8 @@ export class EmployeeListComponent implements OnInit {
   
   constructor(
     private _dialog: MatDialog,
-    private _employeeService: EmployeeService, 
-    private _sortController: SortController)
+    private _employeeService: EmployeeService
+    )
   {}
 
   get hasError(): boolean {
@@ -89,18 +91,6 @@ export class EmployeeListComponent implements OnInit {
       });
   }
 
-  toggleSortField(fieldName: string) {
-    this._sortController.toggleSortField(fieldName);
-    this.refreshFilteredEmployees();
-  }
-
-  sortIndicatorClass(fieldName: string): string {
-    if (this._sortController.currentSortField === fieldName)
-      return this._sortController.sortOrder === SortOrder.Ascending ? 'sort-arrow up' : 'sort-arrow down';
-    
-    return '';
-  }
-
   private load() {
     this.isLoading = true;
 
@@ -111,7 +101,6 @@ export class EmployeeListComponent implements OnInit {
           this.errorMessage = null;
           this.deletedEmployeeId = null;
           this._allEmployees = e;
-          this._sortController.setSortField('lastName');
 
           this.refreshFilteredEmployees();
         },
@@ -129,8 +118,6 @@ export class EmployeeListComponent implements OnInit {
     this.filteredEmployees = !this._filter
       ? this._allEmployees.slice()
       : this._allEmployees.filter(e => this.employeeDoesMatchFilter(e));
-
-    this._sortController.sort(this.filteredEmployees);
   }
 
   private employeeDoesMatchFilter(employee: Employee): boolean {

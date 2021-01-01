@@ -10,6 +10,7 @@ import { EmployeeListComponent } from './employee-list.component';
 import { EmployeeComponent } from './employee.component';
 import { EmployeeService } from './employee.service';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.component';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { ConfirmationDialogComponent } from '../shared/confirmation-dialog.compo
     MatTableModule,
     MatFormFieldModule,
     MatInputModule,
-    MatDialogModule
+    MatDialogModule,
+    NgxDatatableModule
   ],
   entryComponents: [ 
     ConfirmationDialogComponent,

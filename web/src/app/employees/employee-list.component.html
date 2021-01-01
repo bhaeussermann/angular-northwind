@@ -5,40 +5,40 @@
     <input matInput id="search" name="search" type="text" [(ngModel)]="filter" />
   </mat-form-field>
 </div>
-<app-loader *ngIf="isLoading"></app-loader>
 <h5 *ngIf="hasError">Error retrieving employees: {{errorMessage}}</h5>
 <div *ngIf="didLoad">
-  <button mat-button type="button" (click)="addEmployee()">Add</button >
-  <mat-table class="full-width mat-elevation-z8" [dataSource]="filteredEmployees">
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef (click)="toggleSortField('lastName')" [class]="'sortable ' + sortIndicatorClass('lastName')">Last Name</mat-header-cell>
-      <mat-cell *matCellDef="let e">{{e.lastName}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef (click)="toggleSortField('firstName')" [class]="'sortable ' + sortIndicatorClass('firstName')">First Name</mat-header-cell>
-      <mat-cell *matCellDef="let e">{{e.firstName}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef (click)="toggleSortField('title')" [class]="'sortable ' + sortIndicatorClass('title')">Title</mat-header-cell>
-      <mat-cell *matCellDef="let e">{{e.title}}</mat-cell>
-    </ng-container>
-    <ng-container matColumnDef="editDelete">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let e">
-        <span class="center">
-          <a href="#" (click)="$event.preventDefault();editEmployee(e.id)">Edit</a>
-          <a style="margin-left: 20px" href="#" (click)="$event.preventDefault();confirmDelete(e.id, e.firstName + ' ' + e.lastName)">Delete</a>
-          <app-inline-loader *ngIf="(isDeletingEmployee) && (deletedEmployeeId == e.id)"></app-inline-loader>
-          <span *ngIf="(deleteEmployeeError) && (deletedEmployeeId == e.id)">
-            <span class="icon-tooltip">
-              <fa-icon [icon]="errorIcon"></fa-icon>
-              <span class="icon-tooltip-text">{{deleteEmployeeError}}</span>
+  <button mat-button type="button" (click)="addEmployee()">Add</button>
+  <div>
+    <ngx-datatable
+      id="employees-table"
+      class="material"
+      [rows]="filteredEmployees"
+      [columnMode]="ColumnMode.flex"
+      [headerHeight]="50"
+      [footerHeight]="50"
+      rowHeight="auto"
+      [loadingIndicator]="isLoading"
+    >
+      <ngx-datatable-column prop="lastName" [flexGrow]="1"></ngx-datatable-column>
+      <ngx-datatable-column prop="firstName" [flexGrow]="1"></ngx-datatable-column>
+      <ngx-datatable-column prop="title" [flexGrow]="1"></ngx-datatable-column>
+      <ngx-datatable-column [flexGrow]="1">
+        <ng-template ngx-datatable-cell-template let-employee="row">
+          <span class="center-container">
+            <span class="center">
+              <a href="#" (click)="$event.preventDefault();editEmployee(employee.id)">Edit</a>
+              <a style="margin-left: 20px" href="#" (click)="$event.preventDefault();confirmDelete(employee.id, employee.firstName + ' ' + employee.lastName)">Delete</a>
+              <app-inline-loader *ngIf="(isDeletingEmployee) && (deletedEmployeeId == employee.id)"></app-inline-loader>
+              <span *ngIf="(deleteEmployeeError) && (deletedEmployeeId == employee.id)">
+                <span class="icon-tooltip">
+                  <fa-icon [icon]="errorIcon"></fa-icon>
+                  <span class="icon-tooltip-text">{{deleteEmployeeError}}</span>
+                </span>
+              </span>
             </span>
           </span>
-        </span>
-      </mat-cell>
-    </ng-container>
-    <mat-header-row *matHeaderRowDef="['lastName', 'firstName', 'title', 'editDelete']"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: ['lastName', 'firstName', 'title', 'editDelete']"></mat-row>
-  </mat-table>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
 </div>
