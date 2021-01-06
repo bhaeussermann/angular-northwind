@@ -1,13 +1,11 @@
 'use strict';
 const express = require('express');
-const history = require('connect-history-api-fallback');
 const bodyParser = require('body-parser');
 const path = require('path');
 const request = require('request');
 require('dotenv').config();
 
 const app = express();
-app.use(history());
 app.use(bodyParser.json());
 
 app.use('/', express.static(path.join(__dirname, 'dist/northwind')));
