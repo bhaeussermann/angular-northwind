@@ -1,6 +1,6 @@
 {
     "/api": {
-        "target": "https://northwind-express-api.herokuapp.com",
+        "target": "https://northwind-api.onrender.com",
         "secure": false,
         "pathRewrite": {
             "^/api": "/"
