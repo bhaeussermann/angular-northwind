@@ -8,12 +8,13 @@ import { HttpClient, HttpErrorResponse, HttpHeaders } from "@angular/common/http
 @Injectable()
 export class EmployeeService {
   private _employeeUrl = './api/employees';
+  private _timeout = 10000;
 
   constructor(private _http: HttpClient) { }
 
   getEmployees(): Observable<Employee[]> {
     return this._http.get<Employee[]>(this._employeeUrl,
-      { headers: new HttpHeaders({ timeout: `${5000}`}) }).pipe(
+      { headers: new HttpHeaders({ timeout: `${this._timeout}`}) }).pipe(
       catchError(this.handleError));
   }
 
@@ -21,7 +22,7 @@ export class EmployeeService {
     return this._http.get(
       this._employeeUrl + '/' + id,
       {
-        headers: new HttpHeaders({ timeout: `${5000}`})
+        headers: new HttpHeaders({ timeout: `${this._timeout}`})
       })
       .pipe(
         map(response => {
@@ -37,7 +38,7 @@ export class EmployeeService {
       this._employeeUrl,
       employee,
       {
-        headers: new HttpHeaders({ timeout: `${5000}`})
+        headers: new HttpHeaders({ timeout: `${this._timeout}`})
       })
       .pipe(catchError(this.handleError));
   }
@@ -47,7 +48,7 @@ export class EmployeeService {
       this._employeeUrl + '/' + employee.id,
       employee,
       {
-        headers: new HttpHeaders({ timeout: `${5000}`}),
+        headers: new HttpHeaders({ timeout: `${this._timeout}`}),
         responseType: 'text'
       })
       .pipe(
@@ -62,7 +63,7 @@ export class EmployeeService {
     return this._http.delete(
       this._employeeUrl + '/' + id,
       {
-        headers: new HttpHeaders({ timeout: `${5000}`}),
+        headers: new HttpHeaders({ timeout: `${this._timeout}`}),
         responseType: 'text'
       })
       .pipe(
